@@ -1,0 +1,77 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Mar  5 13:34:56 2019
+
+@author: xingya.zhou
+"""
+
+class Graph():
+	def __init__(self):
+		self.graph={}
+		self.adj={}
+		self.edges=[]
+		self.v=[]
+		self.visited=[]
+                         		
+	def addEdge(self,u,v):
+		if self.graph.__contains__(u):
+			self.graph[u].append(v)
+		else:
+			self.graph[u]=[]
+			self.graph[u].append(v)
+			
+		if self.adj.__contains__(u):
+			self.adj[u].append(v)
+		else:
+			self.adj[u]=[]
+			self.adj[u].append(v)
+			
+		if self.adj.__contains__(v):
+			self.adj[v].append(u)
+		else:
+			self.adj[v]=[]
+			self.adj[v].append(u)
+			
+		if u not in self.v:
+			self.v.append(u)
+		if v not in self.v:
+			self.v.append(v)
+						  			
+	def generateEdges(self):
+		for key in self.adj:
+			for neigh in self.adj[key]:
+				self.edges.append((key, neigh))
+		return self.edges
+		
+	def DFSUtil(self, u):
+		self.visited=[False] * len(self.v)		
+		self.DFS(u)
+		
+		return (self.visited)
+		
+	def DFS(self, u):	
+		self.visited[u] = True
+		print(u)
+		
+		for neigh in self.adj[u]:
+			if self.visited[neigh] == False:
+				self.DFS( neigh)
+	
+		          			          
+g = Graph() 
+g.addEdge(0, 5) 
+g.addEdge(4, 3) 
+g.addEdge(0, 1) 
+g.addEdge(9, 12) 
+g.addEdge(6, 4) 
+g.addEdge(5, 4) 
+g.addEdge(0, 2) 
+g.addEdge(11,12) 
+g.addEdge(9, 10) 
+g.addEdge(0, 6) 
+g.addEdge(7, 8) 
+g.addEdge(9, 11) 
+g.addEdge(5, 3) 
+
+edges=g.generateEdges()
+print(g.DFSUtil(0))
